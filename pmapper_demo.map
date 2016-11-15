@@ -36,7 +36,7 @@ PROJECTION
   "+proj=laea +lat_0=52 +lon_0=10 +x_0=4321000 +y_0=3210000 +ellps=GRS80 +units=m +no_defs  no_defs"
 END  
 
-
+  
 
 #
 # Start of web interface definition
@@ -156,7 +156,7 @@ LAYER
     "wms_style"           "default"
     "wms_server_version"  "1.3.0"
     "wms_format"          "image/png"
-    "ows_title"           "KN"
+    "wms_title"           "KN"
   END
 END
 
@@ -213,9 +213,9 @@ LAYER
 END  # Layer
 
 LAYER
-  NAME "StatPolygon84"
-  TYPE polygon
-  DATA "StatPolygon84"
+  NAME "hranice_stat"
+  TYPE line
+  DATA "hranice_stat"
   TRANSPARENCY 30
   TEMPLATE void
   PROJECTION
@@ -223,9 +223,43 @@ LAYER
     "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs  no_defs"
   END 
   CLASS
-    Name 'StatPolygon84'
+    Name 'hranice_stat'
     COLOR 0 0 155
     OUTLINECOLOR 155 0 0
+  END  # Class
+END  # Layer
+
+LAYER
+  NAME "hranice_kraj"
+  TYPE line
+  DATA "hranice_kraj"
+  TRANSPARENCY 50
+  TEMPLATE void
+  PROJECTION
+    #"init=epsg:4326"
+    "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs  no_defs"
+  END 
+  CLASS
+    Name 'hranice_kraj'
+    COLOR 0 0 0
+    OUTLINECOLOR 155 0 100
+  END  # Class
+END  # Layer
+
+LAYER
+  NAME "policajne_okrsky"
+  TYPE polygon
+  DATA "policajne_okrsky"
+  TRANSPARENCY 50
+  TEMPLATE void
+  PROJECTION
+    #"init=epsg:4326"
+    "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs  no_defs"
+  END 
+  CLASS
+    Name 'policajne_okrsky'
+    COLOR 0 0 0
+    OUTLINECOLOR 0 0 0
   END  # Class
 END  # Layer
 
@@ -340,6 +374,7 @@ LAYER
     COLOR 0 0 255
   END  # Class
 END  # Layer
+
 
 
 
