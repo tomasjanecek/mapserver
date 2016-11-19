@@ -1,7 +1,7 @@
 <pmapper>
     <ini>
         <pmapper>
-            <pmTitle>p.mapper - A MapServer PHP/MapScript Framework</pmTitle>
+            <pmTitle>Vizualizace dat Policie CR</pmTitle>
             <debugLevel>3</debugLevel>
             <plugins>export</plugins>
             <plugins>scalebar</plugins>
@@ -23,49 +23,44 @@
             <mapFile>pmapper_demo.map</mapFile>
             <tplMapFile>common/template.map</tplMapFile>
             <categories>
+				<category nme="cat_obyvatele">
+					<group>pocet_obyv_tecky</group>
+					<group>pocet_obyv_raster</group>
+				</category>
 				<category name="cat_admin">
-                    <group>countries</group>
-                    <group>cities10000eu</group>
+					<group>policajne_okrsky</group>
 					<group>hranice_kraj</group>
                     <group>hranice_stat</group>
-                    <group>policajne_okrsky</group>
-                </category>
-                <category name="cat_nature">
-                    <group>rivers</group>
-                </category>
-                <category name="cat_raster">
-                    <group>dem</group>
-                    <group>jpl_wms_global_mosaic</group>
+					<group>data200</group>
                 </category>
             </categories>
             <allGroups>
-                <group>countries</group>
-                <group>cities10000eu</group>
-                <group>dem</group>
-                <group>rivers</group>
-                <group>jpl_wms_global_mosaic</group>
+				<group>pocet_obyv_tecky</group>
+				<group>pocet_obyv_raster</group>
+				<group>policajne_okrsky</group>
 				<group>hranice_kraj</group>
-                <group>hranice_stat</group>
-                <group>policajne_okrsky</group>
+				<group>hranice_stat</group>
+				<group>data200</group>
             </allGroups>
             <defGroups>
-                <group>countries</group>
-                <group>cities10000eu</group>
+				<group>pocet_obyv_tecky</group>
+				<group>pocet_obyv_raster</group>
+                <group>policajne_okrsky</group>
+                <group>hranice_kraj</group>
+				<group>hranice_stat</group>
+				<group>data200</group>
             </defGroups>
             <layerAutoRefresh>1</layerAutoRefresh>
             <imgFormat>png8</imgFormat>
             <altImgFormat>jpeg</altImgFormat>
-            <!--
             <altImgFormatLayers>
-                <layer>jpl_wms_global_mosaic</layer>
-                <layer>dem</layer>
+                <layer>raster2</layer>
             </altImgFormatLayers>
-            -->
             <sliderMax>max</sliderMax>
             <sliderMin>100000</sliderMin>
         </map>
         <query>
-            <limitResult>1000</limitResult>
+            <limitResult>2000</limitResult>
             <highlightColor>0 255 255</highlightColor>
             <highlightSelected>1</highlightSelected>
             <autoZoom>nquery</autoZoom>
@@ -197,15 +192,11 @@
 				<useOpacity>off</useOpacity>
 			</transparency2>
 			<queryeditor>
-				<layersType>4</layersType>
+				<layersType>2</layersType>
 				<queryableLayers>
 					<queryableLayer>
-						<name>countries</name>
-						<description>My country layer description</description>
-					</queryableLayer>
-					<queryableLayer>
-						<name>cities10000eu</name>
-						<description>My cities level description</description>
+						<name>policajne_okrsky</name>
+						<description>policejni okrsky</description>
 					</queryableLayer>
 				</queryableLayers>
 				<dlgType>dynwin</dlgType>
@@ -218,22 +209,15 @@
 			</queryeditor>
         </pluginsConfig>
     </ini>
-    
-    
-    
+       
     <searchlist version="1.0">
         <dataroot>$</dataroot>
-        <searchitem name="cities" description="City">
-            <layer type="shape" name="cities10000eu">
-                <field type="s" name="NAME" description="City"  wildcard="0" />
-            </layer>
-        </searchitem>
-        <searchitem name="countries" description="Country">
-            <layer type="shape" name="countries">
-                <field type="s" name="ISOCODE" description="Country" wildcard="2">
-                    <definition type="options" connectiontype="ms" sort="asc" firstoption="*">
+        <searchitem name="policajne_okrsky" description="policejni okrsky">
+            <layer type="shape" name="policajne_okrsky">
+                <field type="s" name="IDSLUZ" description="identifikator" wildcard="2">
+                    <!--<definition type="options" connectiontype="ms" sort="asc" firstoption="*">
                         <mslayer encoding="ISO-8859-1" keyfield="ISOCODE" showfield="NAME_EN"/>
-                    </definition>
+                    </definition>-->
                 </field>
             </layer>
         </searchitem>

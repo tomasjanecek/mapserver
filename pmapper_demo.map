@@ -17,7 +17,7 @@
 # Start of map file  
 #
 MAP
-EXTENT  1988372 1400000 6411627 5400000 
+EXTENT  4386442 2837940 5045600 3123130
  
 UNITS meters
 #EXTENT -15 30 40 70
@@ -31,9 +31,9 @@ IMAGETYPE png
 INTERLACE OFF
 #CONFIG "PROJ_LIB" "C:/proj/nad/"
 PROJECTION
-  # ETRS-LAEA
-  #"init=epsg:3035"
-  "+proj=laea +lat_0=52 +lon_0=10 +x_0=4321000 +y_0=3210000 +ellps=GRS80 +units=m +no_defs  no_defs"
+  #ETRS-LAEA
+  "init=epsg:3035"
+  #"+proj=laea +lat_0=52 +lon_0=10 +x_0=4321000 +y_0=3210000 +ellps=GRS80 +units=m +no_defs  no_defs"
 END  
 
   
@@ -43,7 +43,7 @@ END
 #
 WEB
   TEMPLATE "map.html"
-  IMAGEPATH "C:/mapserver/ms4w/tmp/ms_tmp/"
+  IMAGEPATH "C:/Program Files/ms4w/tmp/ms_tmp/"
   IMAGEURL "/ms_tmp/"
   METADATA
     #"MAPFILE_ENCODING" "ISO-8859-1" 
@@ -70,7 +70,7 @@ END  # Reference
 #
 LEGEND
 	STATUS OFF
-	IMAGECOLOR 255 255 255
+	IMAGECOLOR -1 -1 -1
 #	OUTLINECOLOR 0 0 0
 	POSITION ll
 	KEYSIZE 18 12
@@ -141,90 +141,46 @@ END
 
 
 LAYER
-  NAME "KN"
+  NAME "data200"
   TYPE RASTER
+  OFFSITE 0 0 0
   STATUS OFF
-  CONNECTION "http://services.cuzk.cz/wms/local-km-wms.asp?"
   CONNECTIONTYPE WMS
+  CONNECTION "http://geoportal.cuzk.cz/WMS_DATA200/WMService.aspx"
   PROJECTION
-    #"init=epsg:4326"
-    "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs  no_defs"
+    "init=epsg:5514"
+    #"+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs  no_defs"
   END
   METADATA
-    "DESCRIPTION"         "KN"
-    "wms_name"            "KN"
-    "wms_style"           "default"
+	"wms_srs"			  "epsg:5514"
+	"wms_name"            "data200"
+    #"wms_style"          "default"
     "wms_server_version"  "1.3.0"
     "wms_format"          "image/png"
-    "wms_title"           "KN"
   END
 END
 
-
-
 #
-# LAYER DGM
+# Start of Layer Group cat_admin
 #
-LAYER
-  NAME "dem"
-  TYPE Raster
-  STATUS OFF
-  DATA 'europa_dem.jpg'
-  MINSCALE 3000000
-  PROJECTION
-    #"init=epsg:4326"
-    "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs  no_defs"
-  END
-  METADATA
-    "DESCRIPTION"   "NGDC Shaded  relief"
-    "LEGENDICON"    "images/legend/dem.png"
-    "ows_title"     "dem"
-  END
-END
-
-
-
- 
-#
-# Start of Layer Countries.shp
-#
-LAYER
-  NAME "countries"
-  TYPE polygon
-  DATA "countries"
-  TRANSPARENCY 30
-  TEMPLATE void
-  PROJECTION
-    #"init=epsg:4326"
-    "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs  no_defs"
-  END
-  METADATA 
-    "DESCRIPTION" "Countries"
-    ## ADAPTED TO MULTILINGUAL SHAPEFILE
-    "RESULT_FIELDS" "ISOCODE,@default:NAME_EN@de:NAME_DE@it:NAME_IT@fr:NAME_FR@br:NAME_BR@es:NAME_ES,@default:CAPITAL_EN@de:CAPITAL_DE@it:CAPITAL_IT@fr:CAPITAL_FR@br:CAPITAL_BR@es:CAPITAL_ES,AREA_KM2,POPULATION"
-    "RESULT_HEADERS" "ISO Code,Name,Capital,Area,Population"
-    "ows_title"      "countries"
-  END  # Metadata 
-  CLASS
-    Name 'Countries'
-    COLOR 200 254 199
-    OUTLINECOLOR 0 0 0
-  END  # Class
-END  # Layer
 
 LAYER
   NAME "hranice_stat"
   TYPE line
   DATA "hranice_stat"
+  STATUS ON
   TRANSPARENCY 30
   TEMPLATE void
   PROJECTION
     #"init=epsg:4326"
     "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs  no_defs"
-  END 
+  END
+  METADATA
+    "DESCRIPTION"         "stat"
+  END
   CLASS
-    Name 'hranice_stat'
-    COLOR 0 0 155
+    Name 'hranice'
+    COLOR 0 0 0
     OUTLINECOLOR 155 0 0
   END  # Class
 END  # Layer
@@ -233,14 +189,18 @@ LAYER
   NAME "hranice_kraj"
   TYPE line
   DATA "hranice_kraj"
+  STATUS ON
   TRANSPARENCY 50
   TEMPLATE void
   PROJECTION
     #"init=epsg:4326"
     "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs  no_defs"
   END 
+  METADATA
+    "DESCRIPTION"         "kraje"
+  END
   CLASS
-    Name 'hranice_kraj'
+    Name 'hranice'
     COLOR 0 0 0
     OUTLINECOLOR 155 0 100
   END  # Class
@@ -248,134 +208,110 @@ END  # Layer
 
 LAYER
   NAME "policajne_okrsky"
-  TYPE polygon
+  TYPE line
   DATA "policajne_okrsky"
+  STATUS ON
   TRANSPARENCY 50
   TEMPLATE void
+  TOLERANCE 2
+  TOLERANCEUNITS pixels
   PROJECTION
     #"init=epsg:4326"
     "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs  no_defs"
   END 
+  METADATA
+    "DESCRIPTION"         "policejni okrsky"
+	"RESULT_FIELDS" 	  "IDSLUZ,OBEC"
+	"RESULT_HEADERS" 	  "identifikator,obec"
+  END
   CLASS
-    Name 'policajne_okrsky'
+    Name 'hranice'
     COLOR 0 0 0
-    OUTLINECOLOR 0 0 0
+    OUTLINECOLOR 155 0 100
   END  # Class
 END  # Layer
 
+#
+# Start of Layer Group cat_obyvatele
+#
+
 LAYER
-  NAME "cities10000eu" 
-  TYPE point
-  DATA "cities10000eu"
-  TOLERANCE 6
-  TOLERANCEUNITS pixels
-  LABELITEM "NAME"
-  LABELMAXSCALE 8000000
+  NAME "pocet_obyv_raster"
+  TYPE raster
+  DATA "obyv"
+  STATUS ON
+  TRANSPARENCY 50
   TEMPLATE void
+  TOLERANCE 0
+  TOLERANCEUNITS pixels
   PROJECTION
     #"init=epsg:4326"
     "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs  no_defs"
+  END 
+  METADATA
+    "DESCRIPTION"         "pocet obyvatel"
   END
-  METADATA 
-    "DESCRIPTION" "Cities"
-    "RESULT_FIELDS" "NAME, ISO2_CODE, POPULATION, GTOPO30"
-    "RESULT_HEADERS" "Name,Country,Inhabitants,Altitude"
-    "RESULT_HYPERLINK" "NAME"
-    "LAYER_ENCODING" "UTF-8"
-    "ows_title"      "cities1000"
-  END  # Metadata  
   
+  CLASSITEM "[pixel]"
+  # class using simple string comparison, equivalent to ([pixel] = 0)
   CLASS
-    NAME "> 1'000'000"
-    EXPRESSION ([POPULATION] > 1000000)
-    COLOR 255 0 0 
-    OUTLINECOLOR 0 0 0 
-    SYMBOL 'square' 
-    SIZE 9
-    LABEL
-      POSITION Auto
-      COLOR 0 0 150 
-      BUFFER 2
-      TYPE truetype
-      ENCODING "UTF-8"
-      FONT FreeSans
-      SIZE 8
-      MAXSIZE 9
-      #SIZE small
-    END #Label  
-  END  # Class
+    EXPRESSION "255"
+    STYLE
+      COLOR 255 255 255
+    END
+  END
+  # class using an EXPRESSION using only [pixel].
   CLASS
-    NAME "500'000 - 1'000'000"
-    EXPRESSION ([POPULATION] <= 1000000 AND [POPULATION] > 500000)
-    COLOR 255 0 0
-    SYMBOL 'circle' 
-    SIZE 8
-    LABEL
-      POSITION Auto
-      COLOR 0 0 150 
-      BUFFER 2
-      TYPE truetype
-      ENCODING "UTF-8"
-      FONT FreeSans
-      SIZE 8
-      MAXSIZE 9
-      #SIZE small
-    END #Label  
-  END  # Class
+    EXPRESSION ([pixel] >= 1 AND [pixel] =< 5)
+    STYLE
+      COLOR 0 97 0
+    END
+  END
+  # class using an EXPRESSION using only [pixel].
   CLASS
-    NAME "100'000 - 500'000"
-    EXPRESSION ([POPULATION] <= 500000 AND [POPULATION] > 100000)
-    COLOR 255 0 0
-    SYMBOL 'square' 
-    SIZE 5
-  END  # Class
+    EXPRESSION ([pixel] > 5 AND [pixel] =< 10)
+    STYLE
+      COLOR 164 196 0
+    END
+  END
+  # class using an EXPRESSION using only [pixel].
   CLASS
-    NAME "50'000 - 100'000"
-    EXPRESSION ([POPULATION] <= 100000 AND [POPULATION] > 50000)
-    COLOR 0 0 0
-    SYMBOL 'square' 
-    SIZE 4
-    #MAXSCALE 20000000
-  END  # Class
+    EXPRESSION ([pixel] > 10 AND [pixel] =< 15)
+    STYLE
+      COLOR 255 187 0
+    END
+  END
+  # class using an EXPRESSION using only [pixel].
   CLASS
-    NAME "10'000 - 50'000"
-    EXPRESSION ([POPULATION] <= 50000 AND [POPULATION] > 10000)
-    COLOR 100 100 100
-    SYMBOL 'circle' 
-    SIZE 3
-    #MAXSCALE 10000000
-  END  # Class
-
+    EXPRESSION ([pixel] > 15 AND [pixel] =< 186)
+    STYLE
+      COLOR 255 38 0
+    END
+  END  
 END  # Layer
 
-
-#
-# Start of Layer Rivers.shp
-#
 LAYER
-  NAME "rivers"
-  TYPE line
-  DATA "rivers"
-  TOLERANCE 3
-  TOLERANCEUNITS pixels
+  NAME "pocet_obyv_tecky"
+  TYPE point
+  DATA "tecky"
+  STATUS ON
+  TRANSPARENCY 50
   TEMPLATE void
+  TOLERANCE 2
+  TOLERANCEUNITS pixels
   PROJECTION
     #"init=epsg:4326"
     "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs  no_defs"
+  END 
+  METADATA
+    "DESCRIPTION"         "pocet obyvatel"
   END
-  METADATA 
-    "DESCRIPTION" "Rivers"
-    "RESULT_FIELDS" "NAME"
-    "RESULT_HEADERS" "Name"
-    "ows_title"      "cities"
-  END  # Metadata 
   CLASS
-    Name 'Rivers'
-    COLOR 0 0 255
+    Name '100 obyvatel'
+	COLOR 0 0 0
+	SYMBOL 'circle'
+	SIZE 2	
   END  # Class
 END  # Layer
-
-
-
 
 END  #Map
