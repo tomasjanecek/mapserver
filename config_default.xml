@@ -23,32 +23,32 @@
             <mapFile>pmapper_demo.map</mapFile>
             <tplMapFile>common/template.map</tplMapFile>
             <categories>
-				<category nme="cat_obyvatele">
-					<group>pocet_obyv_tecky</group>
-					<group>pocet_obyv_raster</group>
-				</category>
 				<category name="cat_admin">
 					<group>policajne_okrsky</group>
 					<group>hranice_kraj</group>
                     <group>hranice_stat</group>
-					<group>data200</group>
+					<group>OpenStreetMaps</group>
                 </category>
+				<category nme="cat_obyvatele">
+					<group>tecky</group>
+					<group>raster</group>
+				</category>
             </categories>
             <allGroups>
-				<group>pocet_obyv_tecky</group>
-				<group>pocet_obyv_raster</group>
+				<group>tecky</group>
+				<group>raster</group>
 				<group>policajne_okrsky</group>
 				<group>hranice_kraj</group>
 				<group>hranice_stat</group>
-				<group>data200</group>
+				<group>OpenStreetMaps</group>
             </allGroups>
             <defGroups>
-				<group>pocet_obyv_tecky</group>
-				<group>pocet_obyv_raster</group>
+				<group>tecky</group>
+				<group>raster</group>
                 <group>policajne_okrsky</group>
                 <group>hranice_kraj</group>
 				<group>hranice_stat</group>
-				<group>data200</group>
+				<group>OpenStreetMaps</group>
             </defGroups>
             <layerAutoRefresh>1</layerAutoRefresh>
             <imgFormat>png8</imgFormat>
@@ -57,10 +57,11 @@
                 <layer>raster2</layer>
             </altImgFormatLayers>
             <sliderMax>max</sliderMax>
-            <sliderMin>100000</sliderMin>
+            <sliderMin>10000</sliderMin>
         </map>
         <query>
             <limitResult>2000</limitResult>
+			<hideResultLimit>1</hideResultLimit>			
             <highlightColor>0 255 255</highlightColor>
             <highlightSelected>1</highlightSelected>
             <autoZoom>nquery</autoZoom>
@@ -83,7 +84,7 @@
 			<legendKeyimageRewrite>0</legendKeyimageRewrite>
         </ui>
         <locale>
-            <defaultLanguage>en</defaultLanguage>
+            <defaultLanguage>cz</defaultLanguage>
             <defaultCharset>UTF-8</defaultCharset>
             <map2unicode>1</map2unicode>
         </locale>
@@ -232,6 +233,5 @@
             </layer>
         </searchitem>
     </searchlist>
-    
     
 </pmapper>

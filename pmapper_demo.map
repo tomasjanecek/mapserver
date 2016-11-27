@@ -140,25 +140,34 @@ END
 #================== START OF LAYER SECTION =====================#
 
 
-LAYER
-  NAME "data200"
-  TYPE RASTER
-  OFFSITE 0 0 0
-  STATUS OFF
-  CONNECTIONTYPE WMS
-  CONNECTION "http://geoportal.cuzk.cz/WMS_DATA200/WMService.aspx"
-  PROJECTION
-    "init=epsg:5514"
-    #"+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs  no_defs"
-  END
-  METADATA
-	"wms_srs"			  "epsg:5514"
-	"wms_name"            "data200"
-    #"wms_style"          "default"
-    "wms_server_version"  "1.3.0"
-    "wms_format"          "image/png"
-  END
-END
+  LAYER
+    CONNECTION "http://129.206.228.72/cached/osm?"
+    CONNECTIONTYPE WMS
+    EXTENT -180 -85.0511287798 180 85.0511287798
+    METADATA
+      "ows_include_items"	"all"
+      "ows_name"	"osm_auto:all"
+      "ows_extent"	"-180.0 -85.0511287798 180.0 85.0511287798"
+      "ows_srs"	"EPSG:4326"
+      "ows_title"	"OSM WMS - osm-wms.de"
+      "wms_format"	"image/png"
+      "wms_getfeatureinfo_formatlist"	"OGRGML"
+      "wms_bbox_extended"	"true"
+      "wms_server_version"	"1.1.1"
+      "gml_include_items"	"all"
+    END # METADATA
+    NAME "OpenStreetMaps"
+    PROJECTION
+      "proj=longlat"
+      "datum=WGS84"
+      "no_defs"
+    END # PROJECTION
+    STATUS ON
+    TILEITEM "location"
+    TYPE RASTER
+	TRANSPARENCY 100
+    UNITS METERS
+  END # LAYER
 
 #
 # Start of Layer Group cat_admin
@@ -181,7 +190,7 @@ LAYER
   CLASS
     Name 'hranice'
     COLOR 0 0 0
-    OUTLINECOLOR 155 0 0
+    OUTLINECOLOR 195 130 155
   END  # Class
 END  # Layer
 
@@ -202,7 +211,7 @@ LAYER
   CLASS
     Name 'hranice'
     COLOR 0 0 0
-    OUTLINECOLOR 155 0 100
+    OUTLINECOLOR 251 154 153
   END  # Class
 END  # Layer
 
@@ -227,7 +236,7 @@ LAYER
   CLASS
     Name 'hranice'
     COLOR 0 0 0
-    OUTLINECOLOR 155 0 100
+    OUTLINECOLOR 227 26 28
   END  # Class
 END  # Layer
 
@@ -235,63 +244,142 @@ END  # Layer
 # Start of Layer Group cat_obyvatele
 #
 
-LAYER
-  NAME "pocet_obyv_raster"
-  TYPE raster
-  DATA "obyv"
-  STATUS ON
-  TRANSPARENCY 50
-  TEMPLATE void
-  TOLERANCE 0
-  TOLERANCEUNITS pixels
-  PROJECTION
-    #"init=epsg:4326"
-    "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs  no_defs"
-  END 
-  METADATA
-    "DESCRIPTION"         "pocet obyvatel"
-  END
-  
-  CLASSITEM "[pixel]"
+  LAYER
+    DATA "raster.tif"
+    EXTENT 12.155731223351 49.513850499133 15.615731223351 51.048850499133
+    METADATA
+      "ows_include_items"	"all"
+      "ows_extent"	"12.1557312234 49.5138504991 15.6157312234 51.0488504991"
+      "ows_srs"	"EPSG:4326"
+      "ows_title"	"raster"
+      "wms_getfeatureinfo_formatlist"	"OGRGML"
+      "wms_bbox_extended"	"true"
+      "gml_include_items"	"all"
+    END # METADATA
+    NAME "raster"
+    PROJECTION
+      "proj=longlat"
+      "datum=WGS84"
+      "no_defs"
+    END # PROJECTION
+    STATUS ON
+	TRANSPARENCY 40
+    TILEITEM "location"
+    TYPE RASTER
+    UNITS METERS
+	CLASSITEM "[pixel]"
   # class using simple string comparison, equivalent to ([pixel] = 0)
-  CLASS
-    EXPRESSION "255"
-    STYLE
-      COLOR 255 255 255
-    END
-  END
+
   # class using an EXPRESSION using only [pixel].
   CLASS
-    EXPRESSION ([pixel] >= 1 AND [pixel] =< 5)
+    EXPRESSION ([pixel] = 1)
+    STYLE
+      COLOR 0 97 0
+    END
+  END
+  CLASS
+    EXPRESSION ([pixel] = 2)
+    STYLE
+      COLOR 0 97 0
+    END
+  END
+  CLASS
+    EXPRESSION ([pixel] = 3)
+    STYLE
+      COLOR 0 97 0
+    END
+  END
+  CLASS
+    EXPRESSION ([pixel] = 4)
+    STYLE
+      COLOR 0 97 0
+    END
+  END
+  CLASS
+    EXPRESSION ([pixel] = 5)
     STYLE
       COLOR 0 97 0
     END
   END
   # class using an EXPRESSION using only [pixel].
   CLASS
-    EXPRESSION ([pixel] > 5 AND [pixel] =< 10)
+    EXPRESSION ([pixel] = 6)
     STYLE
       COLOR 164 196 0
     END
   END
-  # class using an EXPRESSION using only [pixel].
   CLASS
-    EXPRESSION ([pixel] > 10 AND [pixel] =< 15)
+    EXPRESSION ([pixel] = 7)
+    STYLE
+      COLOR 164 196 0
+    END
+  END
+  CLASS
+    EXPRESSION ([pixel] = 8)
+    STYLE
+      COLOR 164 196 0
+    END
+  END
+  CLASS
+    EXPRESSION ([pixel] = 9)
+    STYLE
+      COLOR 164 196 0
+    END
+  END
+  CLASS
+    EXPRESSION ([pixel] = 10)
+    STYLE
+      COLOR 164 196 0
+    END
+  END
+  CLASS
+    EXPRESSION ([pixel] = 11)
     STYLE
       COLOR 255 187 0
     END
   END
-  # class using an EXPRESSION using only [pixel].
   CLASS
-    EXPRESSION ([pixel] > 15 AND [pixel] =< 186)
+    EXPRESSION ([pixel] = 12)
+    STYLE
+      COLOR 255 187 0
+    END
+  END
+  CLASS
+    EXPRESSION ([pixel] = 13)
+    STYLE
+      COLOR 255 187 0
+    END
+  END
+  CLASS
+    EXPRESSION ([pixel] = 14)
+    STYLE
+      COLOR 255 187 0
+    END
+  END
+  CLASS
+    EXPRESSION ([pixel] = 15)
+    STYLE
+      COLOR 255 187 0
+    END
+  END
+  CLASS
+    EXPRESSION ([pixel] = 255)
+    STYLE
+	  COLOR -1 -1 -1
+    END
+  END
+  CLASS
+    EXPRESSION ([pixel] > 15)
     STYLE
       COLOR 255 38 0
     END
-  END  
-END  # Layer
+  END    
+  END # LAYER
+	
+  
 
 LAYER
-  NAME "pocet_obyv_tecky"
+  NAME "tecky"
   TYPE point
   DATA "tecky"
   STATUS ON

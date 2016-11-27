@@ -184,7 +184,7 @@ PM.buttonsDefault = {
     toolbarid:'toolBar',
     options: {orientation:'v',
               css:{height:'650px'},
-              theme:'default',
+              theme:'theme2',
               imagetype:'gif'
              }, 
     buttons: [
